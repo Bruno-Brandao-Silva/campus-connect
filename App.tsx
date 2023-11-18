@@ -3,6 +3,9 @@ import { Text, View, StatusBar } from 'react-native';
 import { Montserrat_400Regular, Montserrat_600SemiBold, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
 import { OpenSans_600SemiBold } from '@expo-google-fonts/open-sans';
 import { NativeBaseProvider } from 'native-base';
+import { Loading } from '@components/Loading';
+import { THEME } from './src/theme';
+import { Login } from '@screens/Login';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -10,11 +13,10 @@ export default function App() {
   })
 
   return (
-    <NativeBaseProvider>
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <StatusBar barStyle={'light-content'} translucent backgroundColor="transparent" />
-        {fontsLoaded ? <Text>Hello world</Text> : <View />}
-      </View>
+    <NativeBaseProvider theme={THEME}>
+      <StatusBar barStyle={'light-content'} translucent backgroundColor="transparent" />
+
+      {fontsLoaded ? <Login /> : <Loading />}
     </NativeBaseProvider>
   );
 }
