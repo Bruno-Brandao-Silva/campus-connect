@@ -1,6 +1,6 @@
 import { Button } from "@components/Button";
 import { Input } from "@components/Input";
-import { Center, Heading, Image, ScrollView, Text, VStack, View } from "native-base";
+import { Center, Image, ScrollView, Text, VStack, View } from "native-base";
 import CAMPUSCONNECT from "../../assets/CAMPUSCONNECT.png";
 
 export function Login() {
