@@ -7,19 +7,36 @@ import { Loading } from '@components/Loading';
 import { THEME } from './src/theme';
 import { Login } from '@screens/Login';
 import { Onboarding } from '@screens/Onboarding';
+import { AuthProvider, useAuth } from '@contexts/AuthContext';
+import axios from 'axios';
+
+axios.defaults.baseURL = process.env.EXPO_PUBLIC_API_URL;
 
 export default function App() {
+  return (
+    <AuthProvider>
+      <Layout />
+    </AuthProvider>
+  );
+}
+
+const Layout = () => {
+  const { authState } = useAuth();
   const [fontsLoaded] = useFonts({
     Montserrat_400Regular, Montserrat_600SemiBold, Montserrat_700Bold, OpenSans_600SemiBold
   })
-
   return (
     <NativeBaseProvider theme={THEME}>
       <StatusBar barStyle={'light-content'} translucent backgroundColor="transparent" />
-
-      {fontsLoaded ? <Onboarding /> : <Loading />}
+      {fontsLoaded ?
+        (authState.authenticated ?
+          (authState.firstAccess ?
+            <Onboarding /> :
+            <Text>Home</Text>) :
+          <Login />) :
+        <Loading />}
     </NativeBaseProvider>
-  );
+  )
 }
 
 
