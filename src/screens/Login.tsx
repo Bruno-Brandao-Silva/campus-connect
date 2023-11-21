@@ -1,27 +1,37 @@
 import { Button } from "@components/Button";
 import { Input } from "@components/Input";
-import { Center, Image, ScrollView, Text, Toast, VStack, View } from "native-base";
-import CAMPUSCONNECT from "../../assets/CAMPUSCONNECT.png";
-import { useState } from "react";
 import { useAuth } from "@contexts/AuthContext";
+import { Center, Image, Modal, ScrollView, Spinner, Text, Toast, VStack, View } from "native-base";
+import { useState } from "react";
+import CAMPUSCONNECT from "../../assets/CAMPUSCONNECT.png";
 
 export function Login() {
   const { signIn, authState, signOut } = useAuth();
   const [ra, setRa] = useState('');
   const [password, setPassword] = useState('');
+  const [showModal, setShowModal] = useState(false);
+
   const loginHandler = async () => {
     try {
       await signIn(ra, password);
     } catch (error) {
       Toast.show({
         title: "Erro ao fazer login",
-        description: "Verifique se o RA e a senha estão corretos",
+        description: "RA ou senha incorretos",
         duration: 3000,
       })
+    }
+    finally {
+      setShowModal(false);
     }
   }
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
+
+      <Modal isOpen={showModal} onClose={() => setShowModal(false)} >
+        <Spinner color={"yellow.600"} size={"lg"} />
+      </Modal>
+
       <VStack flex={1} bg={"green.100"}>
         <Image
           source={CAMPUSCONNECT}
@@ -42,7 +52,7 @@ export function Login() {
             <Text color={"yellow.100"} fontFamily={"body"} fontSize={"xl"}>Senha</Text>
             <Input placeholder="Senha" secureTextEntry my={4} value={password} onChangeText={setPassword} />
           </View>
-          <Button title="Acessar conta" variant="solid" my={4} onPress={loginHandler} />
+          <Button title="Acessar conta" variant="solid" my={4} onPress={() => { loginHandler(); setShowModal(true); }} />
         </Center>
 
         <Text my={12} color={'yellow.100'} mx={8} textAlign={'center'} fontSize={'md'}>
