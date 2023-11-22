@@ -10,6 +10,7 @@ import { Onboarding } from '@screens/Onboarding';
 import { AuthProvider, useAuth } from '@contexts/AuthContext';
 import axios from 'axios';
 import { PostExample } from './src/screens/PostExample';
+import { Post } from '@components/Post';
 
 axios.defaults.baseURL = process.env.EXPO_PUBLIC_API_URL;
 
@@ -33,7 +34,7 @@ const Layout = () => {
         (authState.authenticated ?
           (authState.firstAccess ?
             <Onboarding /> :
-            <PostExample />) :
+            <Post />) :
           <Login />) :
         <Loading />}
     </NativeBaseProvider>

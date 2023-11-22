@@ -11,6 +11,9 @@ export const THEME = extendTheme({
       200: "#F2AC29",
       300: "#BF6A1F",
     },
+    red: {
+      400: "#731702",
+    },
   },
   fonts: {
     heading: "Montserrat_700Bold",
@@ -26,6 +29,7 @@ export const THEME = extendTheme({
   },
   sizes: {
     14: 56,
-    33: 148,
+    18: 72,
+    36: 136,
   },
 });
