@@ -11,6 +11,7 @@ import { AuthProvider, useAuth } from '@contexts/AuthContext';
 import axios from 'axios';
 import { PostExample } from './src/screens/PostExample';
 import { Post } from '@components/Post';
+import { Feed } from '@screens/Feed';
 
 axios.defaults.baseURL = process.env.EXPO_PUBLIC_API_URL;
 
@@ -34,7 +35,7 @@ const Layout = () => {
         (authState.authenticated ?
           (authState.firstAccess ?
             <Onboarding /> :
-            <Post />) :
+            <Feed />) :
           <Login />) :
         <Loading />}
     </NativeBaseProvider>
