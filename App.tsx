@@ -1,5 +1,5 @@
 import { useFonts } from 'expo-font';
-import { Text, View, StatusBar } from 'react-native';
+import { StatusBar } from 'react-native';
 import { Montserrat_400Regular, Montserrat_600SemiBold, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
 import { OpenSans_600SemiBold } from '@expo-google-fonts/open-sans';
 import { NativeBaseProvider } from 'native-base';
@@ -9,8 +9,7 @@ import { Login } from '@screens/Login';
 import { Onboarding } from '@screens/Onboarding';
 import { AuthProvider, useAuth } from '@contexts/AuthContext';
 import axios from 'axios';
-import { PostExample } from './src/screens/PostExample';
-import { Post } from '@components/Post';
+import { PostForm } from './src/screens/PostForm';
 import { Feed } from '@screens/Feed';
 import { Profile } from '@screens/Profie';
 
@@ -25,6 +24,7 @@ export default function App() {
 }
 
 const Layout = () => {
+  let opc = 2;
   const { authState } = useAuth();
   const [fontsLoaded] = useFonts({
     Montserrat_400Regular, Montserrat_600SemiBold, Montserrat_700Bold, OpenSans_600SemiBold
@@ -36,7 +36,13 @@ const Layout = () => {
         (authState.authenticated ?
           (authState.firstAccess ?
             <Onboarding /> :
-            <Profile />) :
+            (() => {
+              switch (opc) {
+                case 0: return <Feed />;
+                case 1: return <PostForm />;
+                case 2: return <Profile />;
+              }
+            })()) :
           <Login />) :
         <Loading />}
     </NativeBaseProvider>

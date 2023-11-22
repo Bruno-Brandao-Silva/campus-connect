@@ -7,13 +7,13 @@ import CAMPUSCONNECT from "../../assets/CAMPUSCONNECT.png";
 
 export function Login() {
   const { signIn, authState, signOut } = useAuth();
-  const [ra, setRa] = useState('');
+  const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
   const [showModal, setShowModal] = useState(false);
 
   const loginHandler = async () => {
     try {
-      await signIn(ra, password);
+      await signIn(login, password);
     } catch (error) {
       Toast.show({
         title: "Erro ao fazer login",
@@ -45,7 +45,7 @@ export function Login() {
         <Center mt={16} flex={1} px={8} display={'flex'}>
           <View w={"full"}>
             <Text color={"yellow.100"} fontFamily={"body"} fontSize={"xl"}>Login</Text>
-            <Input placeholder="Identificação de usuário (R.A.)" keyboardType="number-pad" my={4} value={ra} onChangeText={setRa} />
+            <Input placeholder="Identificação de usuário (R.A.)" keyboardType="number-pad" my={4} value={login} onChangeText={setLogin} />
           </View>
 
           <View w={"full"}>

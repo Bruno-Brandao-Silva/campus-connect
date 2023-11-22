@@ -8,8 +8,9 @@ import { Camera, XSquare } from 'phosphor-react-native';
 import { useState } from 'react';
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
-export function PostExample() {
+export function PostForm() {
     const { signOut, authState } = useAuth();
+    const user = authState.user!;
     const [file, setFiles] = useState<ImagePicker.ImagePickerAsset | null>();
     const [titleInput, setTitleInput] = useState<string>('');
     const pickDocument = async () => {
@@ -45,26 +46,8 @@ export function PostExample() {
 
     return (
         <View flex={1} backgroundColor={'green.100'} p={8}>
-            {/* <Text marginTop={10} fontSize={18} textAlign={'center'} fontWeight={700}>
-                Post Example
-            </Text>
-            <Input placeholder={'Digite seu post'} value={titleInput} onChangeText={setTitleInput} />
-            <Button title="Pick files" onPress={pickDocument} />
-            <Button title="Make post" onPress={postHandler} />
             <Button title="signOut" onPress={signOut} />
 
-            {file && (
-                <View>
-                    <Image
-                        source={{ uri: file.uri }}
-                        alt={file.uri.split("/").pop() || "undefined"}
-                        w={'90%'}
-                        h={200}
-                        margin={2}
-                        mx={'auto'}
-                    />
-                </View>
-            )} */}
             <View flexDirection={'row'} justifyContent={'space-between'} alignItems={'center'} mb={4}>
                 <XSquare color="#BFA288" size={32} />
                 <Button title="Publicar" variant={'outline'} w={32} h={9} py={0} onPress={postHandler} />
@@ -74,7 +57,7 @@ export function PostExample() {
                 <View rounded={'full'} w={14} h={14} >
                     {/* MOCKED SOURCE */}
                     <Image
-                        source={{ uri: 'https://www.github.com/Busolin.png' }}
+                        source={{ uri: `${API_URL}/api/file/${user.profilePicture}` }}
                         alt={'user'}
                         w={14}
                         h={14}
