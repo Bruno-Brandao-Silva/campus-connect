@@ -79,7 +79,7 @@ export function Onboarding() {
 
               <View w={"full"}>
                 <Text color={"yellow.100"} fontFamily={"body"} fontSize={"xl"}>Como deseja ser exibido? (@)</Text>
-                <Input placeholder="Seu @ para os outros usuários" keyboardType="number-pad" my={4} value={username} onChangeText={setUsername} />
+                <Input placeholder="Seu @ para os outros usuários" my={4} value={username} onChangeText={setUsername} />
               </View>
 
               <View w={"full"}>
