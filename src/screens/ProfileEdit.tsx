@@ -56,7 +56,7 @@ export function EditProfile({ closeModal }: EditProfileProps) {
   const handleSaveChanges = async () => {
     setShowModal(true);
     if (!file) {
-      await axios.patch('/api/user/', { editedUser });
+      await axios.patch('/api/user/', { ...editedUser });
     } else {
       const oldfile = user.profilePicture;
       const mediaId = await uploadFiles(file)
