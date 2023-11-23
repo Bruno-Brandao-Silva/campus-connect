@@ -13,7 +13,7 @@ export interface UserCardProps {
 
 export function UserCard({ name, username, showEntryBadge, entryBadge, profilePicture }: UserCardProps) {
     return (
-        <View flexDirection={'row'} borderBottomWidth={1} borderBottomColor={'green.200'} pb={4}>
+        <View margin={0} padding={0} w={350} flexDirection={'row'} borderBottomWidth={1} borderBottomColor={'green.200'} pb={4}>
             <View rounded={'full'} w={16} h={16}>
                 <Image
                     source={{ uri: `${API_URL}/api/file/${profilePicture}` }}
