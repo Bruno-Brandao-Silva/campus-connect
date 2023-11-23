@@ -4,6 +4,7 @@ import { BellSimple } from "phosphor-react-native";
 import logo from '../../assets/logo.png';
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { EmptyList } from "@components/EmptyList";
 
 export function Feed() {
   const [posts, setPosts] = useState<PostProps[]>([]);
@@ -31,6 +32,7 @@ export function Feed() {
         showsVerticalScrollIndicator={false}
         onRefresh={handleRefresh}
         refreshing={false}
+        ListEmptyComponent={() => (<EmptyList />)}
       />
     </View>
   );
