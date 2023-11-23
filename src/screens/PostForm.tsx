@@ -43,7 +43,10 @@ export function PostForm() {
         }
         let mediaId: string | undefined = file ? await uploadFiles(file) : undefined;
         let title: string | undefined = titleInput.length > 0 ? titleInput : undefined;
-        axios.post('/api/post/', { title, mediaId, context: 'public' }).then((response) => console.log(response.data));
+        axios.post('/api/post/', { title, mediaId, context: 'public' }).then((response) => {
+            setTitleInput('');
+            setFiles(null);
+        });
     }
 
     return (
@@ -69,7 +72,7 @@ export function PostForm() {
                     />
                 </View>
 
-                <TextArea autoCompleteType={true} onChangeText={setTitleInput}
+                <TextArea autoCompleteType={true} value={titleInput} onChangeText={setTitleInput}
                     h={'full'}
                     ml={3}
                     placeholder="Qual a novidade para comentar hoje?"
