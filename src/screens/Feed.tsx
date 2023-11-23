@@ -2,31 +2,21 @@ import { Post, PostProps } from "@components/Post";
 import { FlatList, Image, Text, View } from "native-base";
 import { BellSimple } from "phosphor-react-native";
 import logo from '../../assets/logo.png';
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export function Feed() {
-  const mockedData: PostProps[] = [
-    {
-      id: '1',
-      avatar: 'https://avatars.githubusercontent.com/u/60005589?v=4',
-      username: 'Doe John',
-      userAt: 'DoeJohn',
-      createdAt: '12h',
-      description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.',
-      universityPeriod: '2018.1',
-    },
-    {
-      id: '2',
-      avatar: 'https://avatars.githubusercontent.com/u/600055?v=4',
-      username: 'John doe',
-      userAt: 'JohnDoe',
-      createdAt: '12h',
-      description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.',
-      universityPeriod: '2023.1',
-    }
-  ];
+  const [posts, setPosts] = useState<PostProps[]>([]);
+  useEffect(() => {
+    axios.get(`/api/timeline/`).then((response) => {
+      setPosts(response.data)
+    });
+  }, []);
 
   function handleRefresh() {
-    console.log('Refreshed');
+    axios.get(`/api/timeline/`).then((response) => {
+      setPosts(response.data)
+    });
   }
 
   return (
@@ -36,7 +26,7 @@ export function Feed() {
         <BellSimple size={32} color="#F2AC29" />
       </View>
       <FlatList
-        data={mockedData}
+        data={posts}
         renderItem={({ item }) => <Post {...item} />}
         showsVerticalScrollIndicator={false}
         onRefresh={handleRefresh}

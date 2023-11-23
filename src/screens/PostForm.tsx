@@ -6,10 +6,13 @@ import * as ImagePicker from 'expo-image-picker';
 import { Image, TextArea, View, Button as Btn } from 'native-base';
 import { Camera, XSquare } from 'phosphor-react-native';
 import { useState } from 'react';
+import { BellSimple } from "phosphor-react-native";
+import logo from '../../assets/logo.png';
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
-export function PostExample() {
+export function PostForm() {
     const { signOut, authState } = useAuth();
+    const user = authState.user!;
     const [file, setFiles] = useState<ImagePicker.ImagePickerAsset | null>();
     const [titleInput, setTitleInput] = useState<string>('');
     const pickDocument = async () => {
@@ -40,41 +43,27 @@ export function PostExample() {
         }
         let mediaId: string | undefined = file ? await uploadFiles(file) : undefined;
         let title: string | undefined = titleInput.length > 0 ? titleInput : undefined;
-        axios.post('/api/post/', { title, mediaId, context: 'public' }).then((response) => console.log(response.data));
+        axios.post('/api/post/', { title, mediaId, context: 'public' }).then((response) => {
+            setTitleInput('');
+            setFiles(null);
+        });
     }
 
     return (
         <View flex={1} backgroundColor={'green.100'} p={8}>
-            {/* <Text marginTop={10} fontSize={18} textAlign={'center'} fontWeight={700}>
-                Post Example
-            </Text>
-            <Input placeholder={'Digite seu post'} value={titleInput} onChangeText={setTitleInput} />
-            <Button title="Pick files" onPress={pickDocument} />
-            <Button title="Make post" onPress={postHandler} />
-            <Button title="signOut" onPress={signOut} />
-
-            {file && (
-                <View>
-                    <Image
-                        source={{ uri: file.uri }}
-                        alt={file.uri.split("/").pop() || "undefined"}
-                        w={'90%'}
-                        h={200}
-                        margin={2}
-                        mx={'auto'}
-                    />
-                </View>
-            )} */}
+            <View px={2} justifyContent={"space-between"} flexDirection={'row'} mt={8} marginBottom={10}>
+                <Image source={logo} alt="Campus Connect logo" />
+                <BellSimple size={32} color="#F2AC29" />
+            </View>
             <View flexDirection={'row'} justifyContent={'space-between'} alignItems={'center'} mb={4}>
-                <XSquare color="#BFA288" size={32} />
+                <XSquare color="#BFA2880" size={32} />
                 <Button title="Publicar" variant={'outline'} w={32} h={9} py={0} onPress={postHandler} />
             </View>
 
             <View flexDirection={'row'} >
                 <View rounded={'full'} w={14} h={14} >
-                    {/* MOCKED SOURCE */}
                     <Image
-                        source={{ uri: 'https://www.github.com/Busolin.png' }}
+                        source={{ uri: `${API_URL}/api/file/${user.profilePicture}` }}
                         alt={'user'}
                         w={14}
                         h={14}
@@ -83,7 +72,7 @@ export function PostExample() {
                     />
                 </View>
 
-                <TextArea autoCompleteType={true} onChangeText={setTitleInput}
+                <TextArea autoCompleteType={true} value={titleInput} onChangeText={setTitleInput}
                     h={'full'}
                     ml={3}
                     placeholder="Qual a novidade para comentar hoje?"

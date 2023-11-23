@@ -11,6 +11,7 @@ export function Onboarding() {
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
   const [showEntryBadge, setShowEntryBadge] = useState(true);
+  const { updateUser } = useAuth();
 
   useEffect(() => {
     axios.get('/api/user/').then((response) => {
@@ -27,8 +28,9 @@ export function Onboarding() {
 
   const saveInfoHandler = () => {
     axios.patch('/api/user/', { name, username, showEntryBadge })
-      .then(() => {
+      .then(async () => {
         setFirstAccess(false);
+        await updateUser();
       });
   }
 
