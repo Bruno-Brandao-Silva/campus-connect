@@ -38,43 +38,44 @@ export function Search() {
     }, [input]);
 
 
+
     if (id != '') {
         return (<OtherProfile _id={id} resetId={() => setId('')} />)
-    } else {
-        return (
-            <View flex={1} bg={'green.100'} py={6} px={2}>
-                <View flexDirection={'row'}>
-                    <View px={2} justifyContent={"center"} alignItems={"center"} flexDirection={'row'} mb={4} >
-                        <Image source={logo} alt="Campus Connect logo" />
-
-                        <Input placeholder="Pesquisar por usuário" onChangeText={(text) => setInput(text)} w={"3/4"} mx={2}
-                            h={10}
-                            px={4}
-                            borderWidth={1}
-                            borderColor={'yellow.100'}
-                            fontSize="md"
-                            color="yellow.100"
-                            fontFamily="body"
-                            placeholderTextColor="yellow.100"
-                            _focus={{
-                                bg: 'transparent',
-                                borderColor: 'yellow.200'
-                            }}
-
-                        />
-
-                        <BellSimple size={32} color="#F2AC29" />
-                    </View>
-                </View>
-
-                <FlatList data={users} renderItem={({ item }) => (
-                    <Button bgColor={"#00000000"} w={"full"} onPress={() => {
-                        setId(item._id);
-                    }}>
-                        <UserCard {...item} />
-                    </Button>
-                )} />
-            </View>
-        );
     }
+
+    return (
+        <View flex={1} bg={'green.100'} py={6} px={2}>
+            <View flexDirection={'row'}>
+                <View px={2} justifyContent={"center"} alignItems={"center"} flexDirection={'row'} mb={4} >
+                    <Image source={logo} alt="Campus Connect logo" />
+
+                    <Input placeholder="Pesquisar por usuário" onChangeText={(text) => setInput(text)} w={"3/4"} mx={2}
+                        h={10}
+                        px={4}
+                        borderWidth={1}
+                        borderColor={'yellow.100'}
+                        fontSize="md"
+                        color="yellow.100"
+                        fontFamily="body"
+                        placeholderTextColor="yellow.100"
+                        _focus={{
+                            bg: 'transparent',
+                            borderColor: 'yellow.200'
+                        }}
+
+                    />
+
+                    <BellSimple size={32} color="#F2AC29" />
+                </View>
+            </View>
+
+            <FlatList data={users} renderItem={({ item }) => (
+                <Button bg={"transparent"} w={"full"} onPress={() => {
+                    setId(item._id);
+                }}>
+                    <UserCard {...item} />
+                </Button>
+            )} />
+        </View>
+    );
 }
