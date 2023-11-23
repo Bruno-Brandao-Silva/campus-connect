@@ -14,7 +14,9 @@ export function Feed() {
   }, []);
 
   function handleRefresh() {
-    console.log('Refreshed');
+    axios.get(`/api/timeline/`).then((response) => {
+      setPosts(response.data)
+    });
   }
 
   return (
