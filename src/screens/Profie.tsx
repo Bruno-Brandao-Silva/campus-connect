@@ -4,7 +4,7 @@ import logo from '../../assets/logo.png';
 import { Button as ButtonNativeBase } from 'native-base';
 import { Post, PostProps } from "@components/Post";
 import { useAuth } from "@contexts/AuthContext";
-import { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { EditProfile } from "./ProfileEdit";
 import { useFocusEffect } from "@react-navigation/native";
@@ -19,11 +19,22 @@ export function Profile({ }: ProfileProps) {
   const user = authState.user!;
   const [myPosts, setMyPosts] = useState<PostProps[]>([]);
 
-  useFocusEffect(() => {
-    axios.get(`/api/post/`).then((response) => {
-      setMyPosts(response.data)
-    });
-  });
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchData = async () => {
+        try {
+          console.log('Fetching data')
+          const response = await axios.get(`/api/post/`);
+          setMyPosts(response.data);
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      };
+
+      fetchData();
+    }, [])
+  );
+
   if (modal) {
     return (<EditProfile closeModal={() => setModal(false)} />);
   } else {

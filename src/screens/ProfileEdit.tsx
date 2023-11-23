@@ -50,13 +50,18 @@ export function EditProfile({ closeModal }: EditProfileProps) {
       fieldName: 'file',
       httpMethod: 'POST',
       uploadType: FileSystem.FileSystemUploadType.MULTIPART,
-    }).then((response) => JSON.parse(response.body));
+    }).then((response) => JSON.parse(response.body)).catch((error) => console.log(error));
   }
 
   const handleSaveChanges = async () => {
     setShowModal(true);
+
     if (!file) {
+      console.log(editedUser)
       await axios.patch('/api/user/', editedUser);
+      setShowModal(false);
+      closeModal();
+      return;
     }
 
     const oldfile = user.profilePicture;

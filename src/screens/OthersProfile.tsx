@@ -3,7 +3,7 @@ import { BellSimple, GraduationCap } from "phosphor-react-native";
 import logo from '../../assets/logo.png';
 import { Button as ButtonNativeBase } from 'native-base';
 import { Post, PostProps } from "@components/Post";
-import { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { Loading } from "@components/Loading";
 import { useAuth } from "@contexts/AuthContext";
@@ -21,20 +21,33 @@ export function OtherProfile({ _id, resetId }: OthersProfileProps) {
   const [posts, setPosts] = useState<PostProps[]>([]);
   const [user, setUser] = useState<any>({});
   const [following, setFollowing] = useState<boolean>(false);
-  useFocusEffect(() => {
-    console.log(_id)
-    Promise.all([
-      axios.get(`/api/user/${_id}`).then((response) => {
-        if (response.data.followers.includes(authState.user?._id)) {
-          setFollowing(true)
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchData = async () => {
+        try {
+          const [userResponse, postResponse] = await Promise.all([
+            axios.get(`/api/user/${_id}`),
+            axios.get(`/api/post/${_id}`),
+          ]);
+
+          if (userResponse.data.followers.includes(authState.user?._id)) {
+            setFollowing(true);
+          }
+
+          setUser(userResponse.data);
+          setPosts(postResponse.data);
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        } finally {
+          setLoading(false);
         }
-        setUser(response.data)
-      }),
-      axios.get(`/api/post/${_id}`).then((response) => {
-        setPosts(response.data)
-      })
-    ]).then(() => setLoading(false))
-  });
+      };
+
+      fetchData();
+    }, [_id, authState.user?._id])
+  );
+
   const exitHandler = () => {
     setLoading(true);
     resetId();
