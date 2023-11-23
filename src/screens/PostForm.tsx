@@ -3,7 +3,7 @@ import { useAuth } from '@contexts/AuthContext';
 import axios from 'axios';
 import * as FileSystem from 'expo-file-system';
 import * as ImagePicker from 'expo-image-picker';
-import { Button as Btn, Image, Text, TextArea, View } from 'native-base';
+import { Button as Btn, Image, Modal, Spinner, Text, TextArea, View } from 'native-base';
 import { Camera, XSquare } from 'phosphor-react-native';
 import { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
@@ -16,6 +16,10 @@ export function PostForm() {
     const user = authState.user!;
     const [file, setFiles] = useState<ImagePicker.ImagePickerAsset | null>();
     const [titleInput, setTitleInput] = useState<string>('');
+    const [showModal, setShowModal] = useState(false);
+
+    const navigation = useNavigation();
+
     const pickDocument = async () => {
         try {
             const result = await ImagePicker.launchImageLibraryAsync({
@@ -26,7 +30,7 @@ export function PostForm() {
             });
             setFiles(result!.assets![0]);
         } catch (error) {
-            
+
         }
     }
 
@@ -43,6 +47,8 @@ export function PostForm() {
     }
 
     const postHandler = async () => {
+        setShowModal(true);
+
         if (titleInput.trim().length == 0 && !file) {
             return;
         }
@@ -51,13 +57,19 @@ export function PostForm() {
         axios.post('/api/post/', { title, mediaId, context: 'public' }).then((response) => {
             setTitleInput('');
             setFiles(null);
+
+        }).finally(() => {
+            setShowModal(false)
+            navigation.navigate('Feed');
         });
     }
 
-    const navigation = useNavigation();
-
     return (
         <View flex={1} backgroundColor={'green.100'} py={8} px={2}>
+            <Modal isOpen={showModal} onClose={() => setShowModal(false)} >
+                <Spinner color={"yellow.600"} size={"lg"} />
+            </Modal>
+
             <View flexDirection={'row'} justifyContent={'space-between'} alignItems={'center'} mb={4}>
                 <TouchableOpacity onPress={() => navigation.navigate('Feed')}>
                     <XSquare color="#BFA288" size={32} />
@@ -94,7 +106,7 @@ export function PostForm() {
             {file && (
                 <View
                     rounded={'md'}
-                    mt={4}
+                    mt={8}
                 >
                     <Image
                         source={{ uri: file.uri }}
@@ -103,7 +115,7 @@ export function PostForm() {
                         h={'3/4'}
                     />
 
-                    <Btn position={'absolute'} right={-24} top={-24} background={'yellow.100'} rounded={'full'} p={2} onPress={() => setFiles(null)}>
+                    <Btn position={'absolute'} right={-16} top={-16} background={'yellow.100'} rounded={'full'} p={2} onPress={() => setFiles(null)}>
                         <XSquare color="#012626" size={32} />
                     </Btn>
                 </View>
