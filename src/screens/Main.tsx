@@ -6,12 +6,24 @@ import { Montserrat_400Regular, Montserrat_600SemiBold, Montserrat_700Bold } fro
 import { OpenSans_600SemiBold } from '@expo-google-fonts/open-sans';
 import { Onboarding } from "./Onboarding";
 import { Loading } from "@components/Loading";
+import { useEffect } from "react";
+import axios from "axios";
 
 export function Main() {
-    const { authState } = useAuth();
+    const { authState, tokenHandler } = useAuth();
     const [fontsLoaded] = useFonts({
         Montserrat_400Regular, Montserrat_600SemiBold, Montserrat_700Bold, OpenSans_600SemiBold
     })
+    useEffect(() => {
+        axios.interceptors.response.use(response => {
+            return response;
+          }, error => {
+            if (error && error.response && error.response.status === 403) {
+              tokenHandler();
+            } 
+            return Promise.reject(error);
+          });
+      }, []);
     if (fontsLoaded) {
         if (authState.authenticated) {
             if (authState.firstAccess) {

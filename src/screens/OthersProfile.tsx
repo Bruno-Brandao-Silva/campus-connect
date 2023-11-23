@@ -3,10 +3,11 @@ import { BellSimple, GraduationCap } from "phosphor-react-native";
 import logo from '../../assets/logo.png';
 import { Button as ButtonNativeBase } from 'native-base';
 import { Post, PostProps } from "@components/Post";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { Loading } from "@components/Loading";
 import { useAuth } from "@contexts/AuthContext";
+import { useFocusEffect } from "@react-navigation/native";
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL
 export interface OthersProfileProps {
@@ -20,7 +21,7 @@ export function OtherProfile({ _id, resetId }: OthersProfileProps) {
   const [posts, setPosts] = useState<PostProps[]>([]);
   const [user, setUser] = useState<any>({});
   const [following, setFollowing] = useState<boolean>(false);
-  useEffect(() => {
+  useFocusEffect(() => {
     console.log(_id)
     Promise.all([
       axios.get(`/api/user/${_id}`).then((response) => {
@@ -33,7 +34,7 @@ export function OtherProfile({ _id, resetId }: OthersProfileProps) {
         setPosts(response.data)
       })
     ]).then(() => setLoading(false))
-  }, []);
+  });
   const exitHandler = () => {
     setLoading(true);
     resetId();

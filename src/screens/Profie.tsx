@@ -4,10 +4,10 @@ import logo from '../../assets/logo.png';
 import { Button as ButtonNativeBase } from 'native-base';
 import { Post, PostProps } from "@components/Post";
 import { useAuth } from "@contexts/AuthContext";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { EditProfile } from "./ProfileEdit";
-import { EmptyList } from "@components/EmptyList";
+import { useFocusEffect } from "@react-navigation/native";
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL
 export interface ProfileProps { }
@@ -18,11 +18,11 @@ export function Profile({ }: ProfileProps) {
   const user = authState.user!;
   const [myPosts, setMyPosts] = useState<PostProps[]>([]);
 
-  useEffect(() => {
+  useFocusEffect(() => {
     axios.get(`/api/post/`).then((response) => {
       setMyPosts(response.data)
     });
-  }, []);
+  });
   if (modal) {
     return (<EditProfile closeModal={() => setModal(false)} />);
   } else {

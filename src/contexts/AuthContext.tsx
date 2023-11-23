@@ -13,6 +13,7 @@ interface AuthProps {
     signOut: () => Promise<void>;
     setFirstAccess: (firstAccess: boolean) => void;
     updateUser: () => Promise<void>;
+    tokenHandler: () => void;
 }
 
 export interface UserProps {
@@ -43,7 +44,8 @@ export const AuthContext = createContext<AuthProps>({
     signIn: () => Promise.resolve(),
     signOut: () => Promise.resolve(),
     setFirstAccess: () => { },
-    updateUser: () => Promise.resolve()
+    updateUser: () => Promise.resolve(),
+    tokenHandler: () => { }
 });
 
 export const useAuth = () => {
@@ -62,8 +64,7 @@ export const AuthProvider = ({ children }: { children: React.JSX.Element }) => {
         firstAccess: null,
         user: null
     });
-
-    useEffect(() => {
+    const tokenHandler = () => {
         SecureStore.getItemAsync(TOKEN_KEY).then((token) => {
             if (token) {
                 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -93,6 +94,9 @@ export const AuthProvider = ({ children }: { children: React.JSX.Element }) => {
                 });
             }
         });
+    }
+    useEffect(() => {
+        tokenHandler();
     }, []);
 
     const signIn = async (login: string, password: string) => {
@@ -146,7 +150,8 @@ export const AuthProvider = ({ children }: { children: React.JSX.Element }) => {
         signIn,
         signOut,
         setFirstAccess,
-        updateUser
+        updateUser,
+        tokenHandler
     }
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
