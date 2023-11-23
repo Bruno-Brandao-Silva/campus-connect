@@ -1,6 +1,6 @@
 import { Button } from "@components/Button";
 import { Input } from "@components/Input";
-import { Center, Checkbox, Heading, Image, ScrollView, Text, VStack, View } from "native-base";
+import { Center, Checkbox, Heading, Image, Modal, ScrollView, Spinner, Text, VStack, View } from "native-base";
 import CAMPUSCONNECT from "../../assets/CAMPUSCONNECT.png";
 import { useEffect, useState } from "react";
 import { useAuth } from "@contexts/AuthContext";
@@ -12,6 +12,7 @@ export function Onboarding() {
   const [username, setUsername] = useState('');
   const [showEntryBadge, setShowEntryBadge] = useState(true);
   const { updateUser } = useAuth();
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     axios.get('/api/user/').then((response) => {
@@ -36,6 +37,11 @@ export function Onboarding() {
 
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
+
+      <Modal isOpen={showModal} onClose={() => setShowModal(false)} >
+        <Spinner color={"yellow.600"} size={"lg"} />
+      </Modal>
+
       <VStack flex={1} bg={"green.100"}>
         {currentStep === 1 && (
           <Center flex={1} px={8} display={'flex'}>
@@ -76,7 +82,7 @@ export function Onboarding() {
             <Center mt={16} flex={1} px={8} display={'flex'}>
               <View w={"full"}>
                 <Text color={"yellow.100"} fontFamily={"body"} fontSize={"xl"}>Nome</Text>
-                <Input placeholder="Seu nome para os outros usuários" keyboardType="number-pad" my={4} value={name} onChangeText={setName} />
+                <Input placeholder="Seu nome para os outros usuários" my={4} value={name} onChangeText={setName} />
               </View>
 
               <View w={"full"}>

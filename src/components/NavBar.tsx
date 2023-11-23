@@ -1,11 +1,11 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Feed } from '@screens/Feed';
-import { Profile } from '@screens/Profie';
-import { PostForm } from '@screens/PostForm';
-import { Search } from '@screens/Search';
 import { NavigationContainer } from '@react-navigation/native';
+import { Feed } from '@screens/Feed';
+import { PostForm } from '@screens/PostForm';
+import { Profile } from '@screens/Profie';
+import { Search } from '@screens/Search';
+import { House, MagnifyingGlass, UserCircle } from 'phosphor-react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Entypo from 'react-native-vector-icons/Entypo';
 
 const Tab = createBottomTabNavigator();
 
@@ -16,17 +16,23 @@ export function NavBar() {
                 initialRouteName="Feed"
                 screenOptions={{
                     headerShown: false,
-                    tabBarInactiveBackgroundColor: '#00ff00',
-                    tabBarActiveTintColor: '#e91e63',
+                    tabBarActiveBackgroundColor: '#001B1B',
+                    tabBarInactiveBackgroundColor: '#001B1B',
+                    tabBarLabelStyle: { display: 'none' }, // Hide the label
+                    tabBarActiveTintColor: '#BF6A1F', // Set the active icon color
+
+                    tabBarStyle: [{
+                        borderTopWidth: 1,
+                        borderTopColor: '#001B1B',
+                    }]
                 }}
             >
                 <Tab.Screen
                     name="Feed"
                     component={Feed}
                     options={{
-                        tabBarLabel: 'Home',
                         tabBarIcon: ({ color, size }) => (
-                            <MaterialCommunityIcons name="home" color={color} size={size} />
+                            <House size={size} color={color} />
                         ),
                     }}
                 />
@@ -34,9 +40,8 @@ export function NavBar() {
                     name="Search"
                     component={Search}
                     options={{
-                        tabBarLabel: 'Search',
                         tabBarIcon: ({ color, size }) => (
-                            <Entypo name="magnifying-glass" color={color} size={size} />
+                            <MagnifyingGlass size={size} color={color} />
                         ),
                     }}
                 />
@@ -44,7 +49,6 @@ export function NavBar() {
                     name="Post"
                     component={PostForm}
                     options={{
-                        tabBarLabel: 'Post',
                         tabBarIcon: ({ color, size }) => (
                             <MaterialCommunityIcons name="plus-box-multiple-outline" color={color} size={size} />
                         ),
@@ -54,9 +58,8 @@ export function NavBar() {
                     name="Profile"
                     component={Profile}
                     options={{
-                        tabBarLabel: 'Profile',
                         tabBarIcon: ({ color, size }) => (
-                            <MaterialCommunityIcons name="account" color={color} size={size} />
+                            <UserCircle size={size} color={color} />
                         ),
                     }}
                 />
