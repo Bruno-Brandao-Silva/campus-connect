@@ -1,31 +1,35 @@
 # CAMPUSCONNECT
 
-<img src="https://placehold.co/800x200" align="center"/>
+<!-- <img src="https://placehold.co/800x200" align="center"/> -->
 
-Aliquip qui enim dolore velit voluptate ullamco. Pariatur excepteur consectetur voluptate enim excepteur eu non sit. Mollit irure occaecat culpa occaecat est labore incididunt. Pariatur do magna reprehenderit irure excepteur commodo nulla voluptate aliquip officia occaecat tempor sint. In duis eu do irure in sunt eiusmod occaecat dolore aliquip. Lorem commodo nulla occaecat adipisicing ex sit velit.
+O CampusConnect é um aplicativo desenvolvido como parte do projeto da disciplina de Programação para Dispositivos Móveis. Projetado para estudantes da UTFPR, o aplicativo serve como uma rede social, facilitando a interação e o compartilhamento de informações entre os membros da comunidade acadêmica.
+Utilizando o login da universidade, os usuários podem criar, visualizar e interagir com posts, seguir amigos e personalizar seus perfis.
+O CampusConnect oferece uma experiência centrada na comunidade, enriquecendo o aprendizado em React Native para os desenvolvedores.
 
-[Acesse o projeto em produção](https://projetocss-jesscoder.netlify.app/)
+<!-- [Acesse o projeto em produção](https://projetocss-jesscoder.netlify.app/) -->
 
 ## :man_mechanic: Linguagens e Ferramentas
 
-- HTML
-- CSS
-- Javascript
+- React Native
+- Native Base
+- Expo
+- Axios
+- Phosphor Icons
 - Vscode
-- Live Server
 - Git
 
 ## :paintbrush: Layout
 
+<!--
 ### :desktop_computer: Desktop
 
-<img src="https://placehold.co/400x200"/>
+<img src="https://placehold.co/400x200"/> -->
 
-### :iphone: Mobile
+<!-- ### :iphone: Mobile
 
-<img src="https://placehold.co/200x400" />
+<img src="https://placehold.co/200x400" /> -->
 
-[Figma do Projeto](https://figma.com/)
+[Confira o Figma do Projeto](https://www.figma.com/file/KD77VM9s6CbNpc9LHlGHvJ/M%C3%B3veis-sem-madeira)
 
 ## :triangular_flag_on_post: Contribua com o projeto
 
@@ -35,57 +39,48 @@ Aliquip qui enim dolore velit voluptate ullamco. Pariatur excepteur consectetur 
 
 ## :ladder: Fucionalidades do Projeto
 
-- [x] Funcionalidade 1
-- [x] Funcionalidade 2
-- [x] Funcionalidade 3
-- [ ] Funcionalidade 4
-- [ ] Funcionalidade 5
+- [x] Cadastro/Login
+- [x] Feed
+- [x] Profile e edição de perfil
+- [ ] Chat
+- [ ] Like/Unlike
+- [ ] Deletar post
 
 ## :computer: Rodando o Projeto
 
 ```shell
 # 1. Clone o projeto
 
-git clone <urlProjeto>
+git clone https://github.com/Busolin/campus-connect.git
 
 # 2. Instale as dependências
 
 npm install
 
-# 3. Execute o backend
+# 3. Execute o Frontend
 
-npm run backend
-
-# 4. Execute o Frontend
-
-npm run dev
+npx expo start
 ```
 
 ## :sassy_man: Endpoints
 
-- GET /user - Lista todos os usuários
-- GET /user/:id - Busca o usuário do id indicado
-- POST /user- Cria um usuário
--
+- Confira as informações sobre o Back-end e os endpoints [aqui](https://github.com/Bruno-Brandao-Silva/campus-connect-server)
 
 ## :technologist: Autor e Contribuidores
 
-<a href="https://github.com/jessicamedeirosp">
-<img src="https://avatars.githubusercontent.com/u/20779100?v=4" width="50px" />
+<a href="https://github.com/busolin">
+<img src="https://avatars.githubusercontent.com/u/76499290?s=400&u=e125925650078f25926a041b2a73c39614340c2c&v=4" width="50px" />
 </a>
-<a href="https://github.com/jessicamedeirosp">
-<img src="https://avatars.githubusercontent.com/u/20779100?v=4" width="50px" />
-</a>
-<a href="https://github.com/jessicamedeirosp">
-<img src="https://avatars.githubusercontent.com/u/20779100?v=4" width="50px" />
+<a href="https://github.com/Bruno-Brandao-Silva">
+<img src="https://avatars.githubusercontent.com/u/72681281?v=4" width="50px" />
 </a>
 
 ## :scroll: Licença do Projeto
 
 [Licenca MIT License](http://creativecommons.org/licenses/by)
 
-## :writing_hand: Dados do Projeto
+<!-- ## :writing_hand: Dados do Projeto
 
 <img src="https://img.shields.io/github/stars/jessicamedeirosp/PROJETO-CSS?style=social">
 <img src="https://img.shields.io/github/issues-pr-raw/jessicamedeirosp/PROJETO-CSS?style=social">
-<img src="https://img.shields.io/github/issues-closed/jessicamedeirosp/PROJETO-CSS?style=social">
+<img src="https://img.shields.io/github/issues-closed/jessicamedeirosp/PROJETO-CSS?style=social"> -->
