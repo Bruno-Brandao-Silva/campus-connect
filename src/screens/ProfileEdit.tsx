@@ -50,26 +50,20 @@ export function EditProfile({ closeModal }: EditProfileProps) {
       fieldName: 'file',
       httpMethod: 'POST',
       uploadType: FileSystem.FileSystemUploadType.MULTIPART,
-    }).then((response) => JSON.parse(response.body)).catch((error) => console.log(error));
+    }).then((response) => JSON.parse(response.body));
   }
 
   const handleSaveChanges = async () => {
     setShowModal(true);
-
     if (!file) {
-      console.log(editedUser)
-      await axios.patch('/api/user/', editedUser);
-      setShowModal(false);
-      closeModal();
-      return;
+      await axios.patch('/api/user/', { editedUser });
+    } else {
+      const oldfile = user.profilePicture;
+      const mediaId = await uploadFiles(file)
+      await axios.patch('/api/user/', { ...editedUser, profilePicture: mediaId });
+      await axios.delete(`/api/file/${oldfile}`);
     }
-
-    const oldfile = user.profilePicture;
-    const mediaId = await uploadFiles(file)
-    await axios.patch('/api/user/', { ...editedUser, profilePicture: mediaId });
-    await axios.delete(`/api/file/${oldfile}`);
     await updateUser();
-
     setShowModal(false);
     closeModal();
   };
