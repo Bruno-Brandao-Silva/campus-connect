@@ -30,8 +30,8 @@ export function Onboarding() {
   const saveInfoHandler = () => {
     axios.patch('/api/user/', { name, username, showEntryBadge })
       .then(async () => {
-        setFirstAccess(false);
         await updateUser();
+        setFirstAccess(false);
       });
   }
 
