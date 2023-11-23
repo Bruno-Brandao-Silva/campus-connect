@@ -1,6 +1,5 @@
-import { Input } from "@components/Input";
 import { UserCard } from "@components/UserCard";
-import { View, Image, FlatList, Button } from "native-base";
+import { View, Image, FlatList, Button, Text, Input } from "native-base";
 import logo from '../../assets/logo.png';
 import { BellSimple } from "phosphor-react-native";
 import { useEffect, useState } from "react";
@@ -37,16 +36,37 @@ export function Search() {
 
         return () => clearTimeout(timeoutId);
     }, [input]);
+
+
     if (id != '') {
         return (<OtherProfile _id={id} resetId={() => setId('')} />)
     } else {
         return (
-            <View flex={1} bg={'green.100'} >
-                <View px={2} justifyContent={"space-between"} flexDirection={'row'} mt={8} >
-                    <Image source={logo} alt="Campus Connect logo" />
-                    <BellSimple size={32} color="#F2AC29" />
+            <View flex={1} bg={'green.100'} py={6} px={2}>
+                <View flexDirection={'row'}>
+                    <View px={2} justifyContent={"center"} alignItems={"center"} flexDirection={'row'} mb={4} >
+                        <Image source={logo} alt="Campus Connect logo" />
+
+                        <Input placeholder="Pesquisar por usuário" onChangeText={(text) => setInput(text)} w={"3/4"} mx={2}
+                            h={10}
+                            px={4}
+                            borderWidth={1}
+                            borderColor={'yellow.100'}
+                            fontSize="md"
+                            color="yellow.100"
+                            fontFamily="body"
+                            placeholderTextColor="yellow.100"
+                            _focus={{
+                                bg: 'transparent',
+                                borderColor: 'yellow.200'
+                            }}
+
+                        />
+
+                        <BellSimple size={32} color="#F2AC29" />
+                    </View>
                 </View>
-                <Input placeholder={'Pesquisar'} value={input} onChangeText={setInput} />
+
                 <FlatList data={users} renderItem={({ item }) => (
                     <Button bgColor={"#00000000"} w={"full"} onPress={() => {
                         setId(item._id);
