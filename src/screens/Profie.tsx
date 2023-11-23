@@ -23,7 +23,6 @@ export function Profile({ }: ProfileProps) {
     React.useCallback(() => {
       const fetchData = async () => {
         try {
-          console.log('Fetching data')
           const response = await axios.get(`/api/post/`);
           setMyPosts(response.data);
         } catch (error) {
