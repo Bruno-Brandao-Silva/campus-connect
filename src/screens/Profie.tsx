@@ -7,6 +7,7 @@ import { useAuth } from "@contexts/AuthContext";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { EditProfile } from "./ProfileEdit";
+import { EmptyList } from "@components/EmptyList";
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL
 export interface ProfileProps { }
@@ -108,7 +109,14 @@ export function Profile({ }: ProfileProps) {
           <Text color={"yellow.100"} ml={4} mt={4} fontFamily={"heading"} borderBottomColor={'yellow.100'} pl={1} borderBottomWidth={1} w={24}>Publicações</Text>
         </View>
 
-        <FlatList data={myPosts} renderItem={({ item }) => <Post {...item} />} />
+        <FlatList data={myPosts} renderItem={({ item }) => <Post {...item} />}
+          ListEmptyComponent={() => (
+            <View h={80} justifyContent={'center'} alignItems={'center'} px={2}>
+              <EmptyList />
+            </View>
+          )
+          }
+        />
       </View>)
   }
 }

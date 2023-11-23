@@ -32,7 +32,11 @@ export function Feed() {
         showsVerticalScrollIndicator={false}
         onRefresh={handleRefresh}
         refreshing={false}
-        ListEmptyComponent={() => (<EmptyList />)}
+        ListEmptyComponent={() => (
+          <View h={'xl'}>
+            <EmptyList />
+          </View>
+        )}
       />
     </View>
   );
