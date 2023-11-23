@@ -21,30 +21,8 @@ export function Profile({ }: ProfileProps) {
     });
   }, []);
 
-
-  // const mockedData: PostProps[] = [
-  //   {
-  //     id: '1',
-  //     avatar: 'https://avatars.githubusercontent.com/u/60005589?v=4',
-  //     username: 'Doe John',
-  //     userAt: 'DoeJohn',
-  //     createdAt: '12h',
-  //     description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.',
-  //     entryBadge: '2018.1',
-  //   },
-  //   {
-  //     id: '2',
-  //     avatar: 'https://avatars.githubusercontent.com/u/600055?v=4',
-  //     username: 'John doe',
-  //     userAt: 'JohnDoe',
-  //     createdAt: '12h',
-  //     description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.',
-  //     entryBadge: '2023.1',
-  //   }
-  // ];
-
   return (
-    <View flex={1} bg={'green.100'}>
+    <View flex={1} bg={'green.100'} >
       <View height={48} bg={'green.200'} borderBottomWidth={2} borderBottomColor={'yellow.100'}>
         <View px={2} justifyContent={"space-between"} flexDirection={'row'} mt={8} >
           <Image source={logo} alt="Campus Connect logo" />

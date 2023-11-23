@@ -6,6 +6,8 @@ import * as ImagePicker from 'expo-image-picker';
 import { Image, TextArea, View, Button as Btn } from 'native-base';
 import { Camera, XSquare } from 'phosphor-react-native';
 import { useState } from 'react';
+import { BellSimple } from "phosphor-react-native";
+import logo from '../../assets/logo.png';
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
 export function PostForm() {
@@ -46,16 +48,17 @@ export function PostForm() {
 
     return (
         <View flex={1} backgroundColor={'green.100'} p={8}>
-            <Button title="signOut" onPress={signOut} />
-
+            <View px={2} justifyContent={"space-between"} flexDirection={'row'} mt={8} marginBottom={10}>
+                <Image source={logo} alt="Campus Connect logo" />
+                <BellSimple size={32} color="#F2AC29" />
+            </View>
             <View flexDirection={'row'} justifyContent={'space-between'} alignItems={'center'} mb={4}>
-                <XSquare color="#BFA288" size={32} />
+                <XSquare color="#BFA2880" size={32} />
                 <Button title="Publicar" variant={'outline'} w={32} h={9} py={0} onPress={postHandler} />
             </View>
 
             <View flexDirection={'row'} >
                 <View rounded={'full'} w={14} h={14} >
-                    {/* MOCKED SOURCE */}
                     <Image
                         source={{ uri: `${API_URL}/api/file/${user.profilePicture}` }}
                         alt={'user'}
