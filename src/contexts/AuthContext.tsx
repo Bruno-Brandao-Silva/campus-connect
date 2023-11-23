@@ -12,9 +12,10 @@ interface AuthProps {
     signIn: (login: string, password: string) => Promise<void>;
     signOut: () => Promise<void>;
     setFirstAccess: (firstAccess: boolean) => void;
+    updateUser: () => Promise<void>;
 }
 
-interface UserProps {
+export interface UserProps {
     _id: string;
     name: string;
     username: string;
@@ -41,7 +42,8 @@ export const AuthContext = createContext<AuthProps>({
     },
     signIn: () => Promise.resolve(),
     signOut: () => Promise.resolve(),
-    setFirstAccess: () => { }
+    setFirstAccess: () => { },
+    updateUser: () => Promise.resolve()
 });
 
 export const useAuth = () => {
@@ -124,6 +126,13 @@ export const AuthProvider = ({ children }: { children: React.JSX.Element }) => {
             user: null
         });
     }
+    const updateUser = async () => {
+        const user = (await axios.get(`/api/user/`)).data as UserProps;
+        setAuthState({
+            ...authState,
+            user: user as UserProps
+        });
+    }
 
     const setFirstAccess = (firstAccess: boolean) => {
         setAuthState({
@@ -136,7 +145,8 @@ export const AuthProvider = ({ children }: { children: React.JSX.Element }) => {
         authState,
         signIn,
         signOut,
-        setFirstAccess
+        setFirstAccess,
+        updateUser
     }
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
