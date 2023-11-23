@@ -2,17 +2,18 @@ import { Post, PostProps } from "@components/Post";
 import { FlatList, Image, Text, View } from "native-base";
 import { BellSimple } from "phosphor-react-native";
 import logo from '../../assets/logo.png';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { EmptyList } from "@components/EmptyList";
+import { useFocusEffect } from "@react-navigation/native";
 
 export function Feed() {
   const [posts, setPosts] = useState<PostProps[]>([]);
-  useEffect(() => {
+  useFocusEffect(() => {
     axios.get(`/api/timeline/`).then((response) => {
       setPosts(response.data)
     });
-  }, []);
+  });
 
   function handleRefresh() {
     axios.get(`/api/timeline/`).then((response) => {
