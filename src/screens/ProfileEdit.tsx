@@ -18,7 +18,7 @@ export interface EditProfileProps {
 }
 
 export function EditProfile({ closeModal }: EditProfileProps) {
-  const { authState } = useAuth();
+  const { authState, updateUser } = useAuth();
   const user = authState.user!;
   const [editedUser, setEditedUser] = useState({ ...user });
 
@@ -45,9 +45,16 @@ export function EditProfile({ closeModal }: EditProfileProps) {
     }).then((response) => JSON.parse(response.body));
   }
 
-  const handleSaveChanges = () => {
-
-    // axios.patch('/api/user/').then((response) => console.log(response.data));
+  const handleSaveChanges = async () => {
+    if (file) {
+      const oldfile = user.profilePicture;
+      const mediaId = await uploadFiles(file)
+      await axios.patch('/api/user/', { ...editedUser, profilePicture: mediaId });
+      await axios.delete(`/api/file/${oldfile}`);
+    } else {
+      await axios.patch('/api/user/', editedUser);
+    }
+    await updateUser();
     closeModal();
   };
 
@@ -93,7 +100,9 @@ export function EditProfile({ closeModal }: EditProfileProps) {
           onChangeText={(value) => setEditedUser({ ...editedUser, about: value })}
         />
 
-        <View mb={2}>
+        <View mb={2}
+          flexDirection={"row"}>
+          <Button bgColor={"#aa4444"} w={40} marginX={"auto"} marginTop={10} title="Sair" onPress={closeModal} />
           <Button w={40} marginX={"auto"} marginTop={10} title="Salvar" onPress={handleSaveChanges} />
 
         </View>
