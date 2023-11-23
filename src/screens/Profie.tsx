@@ -8,6 +8,7 @@ import { useState } from "react";
 import axios from "axios";
 import { EditProfile } from "./ProfileEdit";
 import { useFocusEffect } from "@react-navigation/native";
+import { EmptyList } from "@components/EmptyList";
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL
 export interface ProfileProps { }
