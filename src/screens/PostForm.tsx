@@ -3,11 +3,12 @@ import { useAuth } from '@contexts/AuthContext';
 import axios from 'axios';
 import * as FileSystem from 'expo-file-system';
 import * as ImagePicker from 'expo-image-picker';
-import { Image, TextArea, View, Button as Btn } from 'native-base';
+import { Button as Btn, Image, Text, TextArea, View } from 'native-base';
 import { Camera, XSquare } from 'phosphor-react-native';
 import { useState } from 'react';
-import { BellSimple } from "phosphor-react-native";
-import logo from '../../assets/logo.png';
+import { TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
 export function PostForm() {
@@ -49,15 +50,15 @@ export function PostForm() {
         });
     }
 
+    const navigation = useNavigation();
+
     return (
-        <View flex={1} backgroundColor={'green.100'} p={8}>
-            <View px={2} justifyContent={"space-between"} flexDirection={'row'} mt={8} marginBottom={10}>
-                <Image source={logo} alt="Campus Connect logo" />
-                <BellSimple size={32} color="#F2AC29" />
-            </View>
+        <View flex={1} backgroundColor={'green.100'} py={8} px={2}>
             <View flexDirection={'row'} justifyContent={'space-between'} alignItems={'center'} mb={4}>
-                <XSquare color="#BFA2880" size={32} />
-                <Button title="Publicar" variant={'outline'} w={32} h={9} py={0} onPress={postHandler} />
+                <TouchableOpacity onPress={() => navigation.navigate('Feed')}>
+                    <XSquare color="#BFA288" size={32} />
+                </TouchableOpacity>
+                <Button title="Publicar" variant={'outline'} w={32} h={8} py={0} mr={2} onPress={postHandler} />
             </View>
 
             <View flexDirection={'row'} >
@@ -71,6 +72,8 @@ export function PostForm() {
                         borderWidth={'1'} borderColor={'yellow.100'}
                     />
                 </View>
+
+
 
                 <TextArea autoCompleteType={true} value={titleInput} onChangeText={setTitleInput}
                     h={'full'}
