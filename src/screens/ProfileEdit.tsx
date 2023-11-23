@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { View, Image } from "native-base";
+import { View, Image, Text, Modal, Spinner } from "native-base";
 import { Button } from "@components/Button";
 import { Input } from "@components/Input";
-import { BellSimple } from "phosphor-react-native";
+import { ArrowLeft, BellSimple } from "phosphor-react-native";
 import logo from '../../assets/logo.png';
 import { Button as Btn } from 'native-base';
 import { useAuth } from "@contexts/AuthContext";
@@ -10,6 +10,9 @@ import axios from "axios";
 import { Camera } from 'phosphor-react-native';
 import * as FileSystem from 'expo-file-system';
 import * as ImagePicker from 'expo-image-picker';
+import { TouchableOpacity } from "react-native";
+import { TextArea } from "native-base";
+
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
 
@@ -21,6 +24,7 @@ export function EditProfile({ closeModal }: EditProfileProps) {
   const { authState, updateUser } = useAuth();
   const user = authState.user!;
   const [editedUser, setEditedUser] = useState({ ...user });
+  const [showModal, setShowModal] = useState(false);
 
   const [file, setFiles] = useState<ImagePicker.ImagePickerAsset | null>();
   const pickDocument = async () => {
@@ -50,23 +54,31 @@ export function EditProfile({ closeModal }: EditProfileProps) {
   }
 
   const handleSaveChanges = async () => {
-    if (file) {
-      const oldfile = user.profilePicture;
-      const mediaId = await uploadFiles(file)
-      await axios.patch('/api/user/', { ...editedUser, profilePicture: mediaId });
-      await axios.delete(`/api/file/${oldfile}`);
-    } else {
+    setShowModal(true);
+    if (!file) {
       await axios.patch('/api/user/', editedUser);
     }
+
+    const oldfile = user.profilePicture;
+    const mediaId = await uploadFiles(file)
+    await axios.patch('/api/user/', { ...editedUser, profilePicture: mediaId });
+    await axios.delete(`/api/file/${oldfile}`);
     await updateUser();
+
+    setShowModal(false);
     closeModal();
   };
 
   return (
     <View zIndex={999} bg={'green.100'} w={"full"} h={"full"}>
-      <View px={2} justifyContent={"space-between"} flexDirection={'row'} mt={8} >
-        <Image source={logo} alt="Campus Connect logo" />
-        <BellSimple size={32} color="#F2AC29" />
+      <Modal isOpen={showModal} onClose={() => setShowModal(false)} >
+        <Spinner color={"yellow.600"} size={"lg"} />
+      </Modal>
+
+      <View px={4} mt={8} >
+        <TouchableOpacity onPress={closeModal}>
+          <ArrowLeft color="#BFA288" size={24} />
+        </TouchableOpacity>
       </View>
 
       <View flex={0} flexDirection={"row"} justifyContent={"center"} w={"full"}>
@@ -78,15 +90,25 @@ export function EditProfile({ closeModal }: EditProfileProps) {
           rounded={'full'}
           borderWidth={2} borderColor={'yellow.100'}
         />
-      </View>
-      <View mt={8} marginX={5} >
-        <View margin={"auto"} marginBottom={8}>
-          <Btn onPress={pickDocument} w={20} h={20} bg={'transparent'} borderWidth={1} borderColor={'yellow.100'} bgColor={'green.200'} _pressed={{
+        <Btn
+          rounded={'full'}
+          position={'absolute'}
+          bottom={-4}
+          right={32}
+          onPress={pickDocument}
+          w={12}
+          h={12}
+          bg={'transparent'}
+          borderWidth={1}
+          borderColor={'yellow.100'}
+          bgColor={'green.200'}
+          _pressed={{
             bg: 'yellow.100',
           }}>
-            <Camera color='#BFA288' size={48} />
-          </Btn>
-        </View>
+          <Camera color='#BFA288' size={24} />
+        </Btn>
+      </View>
+      <View mt={8} marginX={4} >
 
         <Input
           placeholder="Name"
@@ -98,18 +120,24 @@ export function EditProfile({ closeModal }: EditProfileProps) {
           value={editedUser.username}
           onChangeText={(value) => setEditedUser({ ...editedUser, username: value })}
         />
-        <Input
+
+        <TextArea
+          autoCompleteType={true}
           placeholder="Sobre"
           value={editedUser.about}
           onChangeText={(value) => setEditedUser({ ...editedUser, about: value })}
+          borderColor={'yellow.100'}
+          color={'yellow.100'}
+          placeholderTextColor={'yellow.100'}
+          mb={4}
+          _focus={{
+            borderColor: 'yellow.200',
+            bg: 'transparent'
+          }}
         />
 
-        <View mb={2}
-          flexDirection={"row"}>
-          <Button bgColor={"#aa4444"} w={40} marginX={"auto"} marginTop={10} title="Sair" onPress={closeModal} />
-          <Button w={40} marginX={"auto"} marginTop={10} title="Salvar" onPress={handleSaveChanges} />
 
-        </View>
+        <Button title="Salvar" w={'full'} onPress={handleSaveChanges} />
       </View>
 
     </View >
