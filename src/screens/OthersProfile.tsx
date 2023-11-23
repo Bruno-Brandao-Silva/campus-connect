@@ -57,7 +57,7 @@ export function OtherProfile({ _id, resetId }: OthersProfileProps) {
       loading ? <Loading /> :
         <View zIndex={999} flex={1} bg={'green.100'} >
           <View height={48} bg={'green.200'} borderBottomWidth={2} borderBottomColor={'yellow.100'}>
-            <View px={2} justifyContent={"space-between"} flexDirection={'row'} mt={8} >
+            <View px={4} justifyContent={"space-between"} flexDirection={'row'} mt={8} >
               <Image source={logo} alt="Campus Connect logo" />
               <BellSimple size={32} color="#F2AC29" />
             </View>
