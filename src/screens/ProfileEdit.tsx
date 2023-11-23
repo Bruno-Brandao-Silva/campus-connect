@@ -24,13 +24,17 @@ export function EditProfile({ closeModal }: EditProfileProps) {
 
   const [file, setFiles] = useState<ImagePicker.ImagePickerAsset | null>();
   const pickDocument = async () => {
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: false, quality: 1,
-      videoQuality: ImagePicker.UIImagePickerControllerQualityType.Medium,
-      base64: false,
-    });
-    setFiles(result!.assets![0]);
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: false, quality: 1,
+        videoQuality: ImagePicker.UIImagePickerControllerQualityType.Medium,
+        base64: false,
+      });
+      setFiles(result!.assets![0]);
+    } catch (error) {
+
+    }
   }
 
   const uploadFiles = async (file: ImagePicker.ImagePickerAsset) => {
